@@ -9,7 +9,7 @@ def upload_to_gcs():
     client = storage.Client()
     bucket = client.bucket("pipelines-datos-auto")
     blob = bucket.blob("raw/ventas.csv")
-    blob.upload_from_filename("data/ventas.csv")
+    blob.upload_from_filename("/opt/airflow/data/ventas.csv")
     print("Archivo subido a GCS")
 
 # Función para cargar datos en BigQuery
