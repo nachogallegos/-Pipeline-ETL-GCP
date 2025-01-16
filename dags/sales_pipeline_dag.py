@@ -31,6 +31,9 @@ default_args = {
     "owner": "airflow",
     "start_date": datetime(2025, 1, 1),
     "retries": 1,
+    "email_on_failure": True,
+    "email_on_retry": False,
+    "email":["ig7steam@gmail.com"], # Reemplaza con tu correo
 }
 
 with DAG(
