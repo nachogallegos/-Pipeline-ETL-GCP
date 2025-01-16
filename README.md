@@ -4,8 +4,9 @@ Este proyecto implementa un pipeline ETL utilizando herramientas de Google Cloud
 
 ## Estructura del proyecto
 - `dags/`: Contiene los DAGs de Airflow.
+- `sales_pipelines_dag.py`: DAG que sube datos a GCS y los carga en BigQuery.
 - `data/`: Archivos de datos utilizados en el proyecto (por ejemplo, `ventas.csv`).
-- `scripts/`: Scripts auxiliares como `validador.py` para validaciones y pruebas.
+- `scripts/`: Scripts auxiliares como `validador.py`.
 - `.gitignore`: Define los archivos y carpetas ignorados por Git.
 
 ## Requisitos
@@ -18,21 +19,15 @@ Este proyecto implementa un pipeline ETL utilizando herramientas de Google Cloud
   - Composer (Airflow)
 
 ## Cómo usar
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/nachogallegos/-Pipeline-ETL-GCP.git
+1. Sube el archivo CSV `ventas.csv` a la carpeta `data/`.
+2. Configura las credenciales de GCP en el entorno de Airflow.
+3. Activa el DAG `sales_pipeline` en la interfaz de Airflow.
+4. Monitorea el progreso del DAG en la interfaz para confirmar que:
+   - El archivo `ventas.csv` se sube a GCS.
+   - Los datos se cargan correctamente en BigQuery.
 
-2. Instalar las dependencias necesarias:
-
-    pip install -r requirements.txt
-
-3. Configurar las credenciales de GCP si es necesario.
-    Ejecutar el script de validación:
-
-        python scripts/validador.py
 
 ## Próximos pasos
-
-    -- Completar la conexión entre las etapas del pipeline ETL.
-    -- Optimizar el rendimiento para grandes volúmenes de datos.
-    -- Agregar pruebas unitarias para los scripts.
+- Implementar notificaciones por correo en caso de fallos en el DAG.
+- Optimizar el rendimiento del pipeline para manejar grandes volúmenes de datos.
+- Añadir pruebas unitarias para las funciones Python en el DAG.
