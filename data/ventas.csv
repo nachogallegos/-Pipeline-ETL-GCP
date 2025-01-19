@@ -1,18 +1,6 @@
-import csv
-
-# Datos de ejemplo
-datos = [
-    [id_venta, cliente, producto, cantidad, precio, fecha_venta],
-    [1, Juan, ProductoA, 2, 100, 2023-12-01],
-    [2, Ana, ProductoB, 1, 150, 2023-12-02],
-    [3, Pedro, ProductoA, 3, 100, 2023-12-03],
-    [4, Lucía, ProductoC, 5, 200, 2023-12-04],
-    [5, Carlos, ProductoB, 1, 150, 2023-12-05],
-]
-
-# Crear el archivo CSV
-with open(data/ventas.csv, mode=w, newline=, encoding=utf-8) as archivo_csv:
-    escritor = csv.writer(archivo_csv)
-    escritor.writerows(datos)
-
-print(Archivo CSV creado: data/ventas.csv)
+id_venta,cliente,producto,cantidad,precio,fecha_venta
+1,Juan,ProductoA,2,100,2023-12-01
+2,Ana,ProductoB,1,150,2023-12-02
+3,Pedro,ProductoA,3,100,2023-12-03
+4,Lucía,ProductoC,5,200,2023-12-04
+5,Carlos,ProductoB,1,150,2023-12-05

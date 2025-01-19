@@ -16,10 +16,18 @@ def upload_to_gcs():
 def load_to_bigquery():
     client = bigquery.Client()
     table_id = "pipeline-de-datos-automatizado.sales_dataset.ventas"
+    schema = [
+        bigquery.SchemaField("id_venta", "INTEGER", mode="NULLABLE"),
+        bigquery.SchemaField("cliente", "STRING", mode="NULLABLE"),
+        bigquery.SchemaField("producto", "STRING", mode="NULLABLE"),
+        bigquery.SchemaField("cantidad", "INTEGER", mode="NULLABLE"),
+        bigquery.SchemaField("precio", "INTEGER", mode="NULLABLE"),
+        bigquery.SchemaField("fecha_venta", "DATE", mode="NULLABLE"),
+    ]
     job_config = bigquery.LoadJobConfig(
+        schema=schema,
         source_format=bigquery.SourceFormat.CSV,
-        skip_leading_rows=1,
-        autodetect=True,
+        skip_leading_rows=1,  # Ignorar la primera fila (encabezados)
     )
     uri = "gs://pipelines-datos-auto/raw/ventas.csv"
     load_job = client.load_table_from_uri(uri, table_id, job_config=job_config)
@@ -33,7 +41,7 @@ default_args = {
     "retries": 1,
     "email_on_failure": True,
     "email_on_retry": False,
-    "email":["ig7steam@gmail.com"], # Reemplaza con tu correo
+    "email": ["ig7steam@gmail.com"],  # Reemplaza con tu correo
 }
 
 with DAG(
