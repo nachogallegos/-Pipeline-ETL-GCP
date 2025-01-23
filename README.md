@@ -1,45 +1,48 @@
-# Pipeline ETL Automatizado con GCP
+# Proyecto 1: Pipeline ETL Automatizado con GCP
 
-Este proyecto implementa un pipeline ETL utilizando herramientas de Google Cloud Platform como Airflow, Cloud Storage y BigQuery. Permite procesar y transformar grandes volúmenes de datos mediante flujos automatizados.
+## Descripción
+Este proyecto implementa un pipeline ETL (Extracción, Transformación y Carga) automatizado utilizando Google Cloud Platform (GCP). El pipeline procesa datos desde una fuente externa y los carga en BigQuery para su posterior análisis. El flujo está gestionado por Apache Airflow, utilizando un DAG para orquestar las tareas.
 
-## Estructura del proyecto
-- `dags/`: Contiene los DAGs de Airflow.
-  - `sales_pipelines_dag.py`: DAG que sube datos a GCS y los carga en BigQuery.
-- `data/`: Archivos de datos utilizados en el proyecto (por ejemplo, `ventas.csv`).
-- `scripts/`: Scripts auxiliares como `validador.py`.
-- `.gitignore`: Define los archivos y carpetas ignorados por Git.
-- `docker-compose.yaml`: Configuración para desplegar los servicios necesarios con Docker.
-- `.env`: Archivo con variables de entorno sensibles (no se sube al repositorio).
+## Objetivos
+1. Diseñar un pipeline ETL eficiente y escalable.
+2. Automatizar el pipeline mediante Apache Airflow.
+3. Implementar alertas por correo en caso de fallos.
+4. Manejar datos transformados y almacenarlos en BigQuery.
 
-## Requisitos
-- **Python 3.8+**
-- Librerías Python necesarias:
-  - pandas
-  - apache-airflow
-  - google-cloud-storage
-  - google-cloud-bigquery
-- Herramientas configuradas en Google Cloud Platform:
-  - Google Cloud Storage
+## Tecnologías utilizadas
+- **Google Cloud Platform**
+  - Google Cloud Storage (GCS)
   - BigQuery
-  - Composer (Airflow)
+  - Cloud Composer (Apache Airflow gestionado)
+- **Python**
+  - Bibliotecas: pandas, requests, google-cloud-storage, google-cloud-bigquery
+- **Apache Airflow**
+- **Git/GitHub** para control de versiones
 
-## Cómo usar
-1. Sube el archivo CSV `ventas.csv` a la carpeta `data/`.
-2. Configura las credenciales de GCP en el entorno de Airflow:
-   - Asegúrate de tener un archivo `credentials.json` válido y de mapearlo correctamente en tu contenedor de Docker.
-3. Activa el DAG `sales_pipeline` en la interfaz de Airflow.
-4. Monitorea el progreso del DAG en la interfaz para confirmar que:
-   - El archivo `ventas.csv` se sube a GCS.
-   - Los datos se cargan correctamente en BigQuery.
+## Progreso actual
+1. Configuración de Cloud Composer para gestionar los DAGs.
+2. Creación de un DAG que realiza las siguientes tareas:
+   - Extracción de datos desde una fuente externa (CSV/API).
+   - Transformación de los datos utilizando scripts en Python.
+   - Carga de los datos transformados en BigQuery.
+3. **Implementación de notificaciones por correo en caso de fallos en los DAGs.**
+4. Subida de los avances del proyecto al repositorio de GitHub.
 
-## Configuración del entorno
-1. Clona el repositorio:
+## Próximos pasos
+- Optimizar el rendimiento del pipeline para manejar grandes volúmenes de datos.
+- Añadir pruebas unitarias para las funciones Python en el DAG.
+
+## Notificaciones por correo
+El pipeline ahora incluye notificaciones por correo en caso de fallos en los DAGs:
+- Las notificaciones envían un email detallando el error y las tareas afectadas.
+- Configuración: El correo está configurado en la sección `email` del DAG utilizando las opciones SMTP de Airflow.
+
+## Cómo ejecutar este proyecto
+1. Clona este repositorio:
    ```bash
-   git clone https://github.com/nachogallegos/Pipeline-ETL-GCP.git
-   cd Pipeline-ETL-GCP
- 
- ## Próximos pasos
-
-  - Implementar notificaciones por correo en caso de fallos en el DAG.
-  - Optimizar el rendimiento del pipeline para manejar grandes volúmenes de datos.
-  - Añadir pruebas unitarias para las funciones Python en el DA
+   git clone <url-del-repositorio>
+   ```
+2. Sube los archivos del DAG al entorno de Cloud Composer.
+3. Configura las credenciales de GCP necesarias para el acceso a BigQuery y GCS.
+4. Activa el DAG desde la interfaz web de Airflow.
+5. Supervisa la ejecución y revisa los logs en caso de errores.

@@ -97,6 +97,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./credentials.json:/opt/airflow/credentials.json
+      - ./airflow.cfg:/opt/airflow/airflow.cfg
       
 
   airflow-scheduler:
@@ -119,6 +120,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./credentials.json:/opt/airflow/credentials.json
+      - ./airflow.cfg:/opt/airflow/airflow.cfg
 
   airflow-worker:
     <<: *airflow-common

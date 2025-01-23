@@ -1,8 +1,34 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+import smtplib
+from email.mime.text import MIMEText
 from google.cloud import storage
 from google.cloud import bigquery
+
+# Función para enviar correos en caso de fallo
+def send_failure_email(context):
+    task_instance = context.get("task_instance")
+    exception = context.get("exception")
+    subject = f"Fallo en el DAG {task_instance.dag_id}"
+    body = f"""
+    <p>El DAG <b>{task_instance.dag_id}</b> ha fallado.</p>
+    <p>Tarea: <b>{task_instance.task_id}</b></p>
+    <p>Detalles: {exception}</p>
+    """
+    msg = MIMEText(body, "html")
+    msg["Subject"] = subject
+    msg["From"] = "tucorreo@gmail.com"
+    msg["To"] = "tucorreo@gmail.com"
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login("tucorreo@gmail.com", "tuclave")
+            server.send_message(msg)
+        print("Correo de fallo enviado con éxito")
+    except Exception as e:
+        print(f"Error al enviar correo: {e}")
 
 # Función para subir datos a GCS
 def upload_to_gcs():
@@ -34,14 +60,14 @@ def load_to_bigquery():
     load_job.result()
     print("Datos cargados en BigQuery")
 
-# Definir el DAG
+# Configuración del DAG
 default_args = {
     "owner": "airflow",
     "start_date": datetime(2025, 1, 1),
     "retries": 1,
-    "email_on_failure": True,
+    "email_on_failure": False,  # Se maneja con el callback
     "email_on_retry": False,
-    "email": ["ig7steam@gmail.com"],  # Reemplaza con tu correo
+    "on_failure_callback": send_failure_email,  # Callback global para fallos
 }
 
 with DAG(
@@ -50,11 +76,14 @@ with DAG(
     schedule_interval="@daily",
     catchup=False,
 ) as dag:
+
+    # Tarea para subir datos a GCS
     upload_task = PythonOperator(
         task_id="upload_to_gcs",
         python_callable=upload_to_gcs,
     )
 
+    # Tarea para cargar datos en BigQuery
     load_task = PythonOperator(
         task_id="load_to_bigquery",
         python_callable=load_to_bigquery,
