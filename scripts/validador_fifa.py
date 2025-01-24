@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+from google.cloud import storage
 
 # Leer el archivo FIFA
 df = pd.read_csv("data/FIFA-21 Complete.csv", sep=";")
@@ -66,3 +68,13 @@ if df["potential"].min() < potential_range[0] or df["potential"].max() > potenti
 cleaned_file_path = "data/FIFA-21 Complete Cleaned.csv"
 df.to_csv(cleaned_file_path, index=False, sep=";")
 print(f"Archivo limpio guardado en: {cleaned_file_path}")
+
+
+# Asegúrate de que las credenciales estén configuradas correctamente
+credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+if credentials_path is None:
+    raise RuntimeError("La variable GOOGLE_APPLICATION_CREDENTIALS no está configurada.")
+
+# Ejemplo de conexión a GCS
+client = storage.Client()
+print("Conexión a GCS exitosa.")
