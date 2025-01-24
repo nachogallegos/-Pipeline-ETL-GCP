@@ -1,5 +1,5 @@
 import unittest
-from scripts.validador_fifa import validate_positions
+from validador_fifa import validate_positions
 
 class TestValidadorFIFA(unittest.TestCase):
 
