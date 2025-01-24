@@ -2,3 +2,6 @@ __pycache__/
 .env
 *.log
 .DS_Store
+validador.py
+ventas.csv
+sales_pipeline_dag.py
