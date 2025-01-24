@@ -25,7 +25,9 @@ jobs:
       run: ls -R
 
     - name: Set up Google Cloud credentials
-      run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /opt/airflow/credentials.json
+      run: |
+        mkdir -p /opt/airflow
+        echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /opt/airflow/credentials.json
 
     - name: Debug credentials.json
       run: cat /opt/airflow/credentials.json
@@ -39,4 +41,5 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/credentials.json
         PYTHONPATH: ${{ github.workspace }}
+        RUNNING_TESTS: "true"
       run: python -m unittest discover -s tests -p "test_*.py"
