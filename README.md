@@ -10,6 +10,7 @@ Este proyecto implementa un pipeline ETL (Extracción, Transformación y Carga) 
 4. Manejar datos transformados y almacenarlos en BigQuery.
 5. Cargar datos procesados en BigQuery para análisis avanzado.
 6. Implementar validaciones y limpieza de datos.
+7. Crear dashboards
 
 ## Tecnologías utilizadas
 - **Google Cloud Platform**
@@ -20,6 +21,7 @@ Este proyecto implementa un pipeline ETL (Extracción, Transformación y Carga) 
   - Bibliotecas: pandas, google-cloud-storage, google-cloud-bigquery
 - **Apache Airflow**
 - **Git/GitHub** para control de versiones y CI/CD
+- **Looker Studio** para creacion de dashboards
 
 ## Dataset Procesado
 El proyecto utiliza el dataset de FIFA 2021, que incluye información de jugadores como:
@@ -37,7 +39,7 @@ El proyecto utiliza el dataset de FIFA 2021, que incluye información de jugador
     Verificación de valores nulos y rangos esperados.
     Validación de posiciones y columnas importantes
 
-## Progreso actual
+## Resumen del proyecto
 1. Configuración de Cloud Composer para gestionar los DAGs.
 2. Creación de un DAG que realiza las siguientes tareas:
    - Extracción de datos desde un archivo CSV local.
@@ -45,9 +47,10 @@ El proyecto utiliza el dataset de FIFA 2021, que incluye información de jugador
    - Transformación de los datos para cumplir con el esquema de BigQuery.
    - Subida del archivo limpio a Google Cloud Storage.
    - Carga de los datos transformados en BigQuery.
-3. **Implementación de notificaciones por correo en caso de fallos en los DAGs.**
+3. Implementación de notificaciones por correo en caso de fallos en los DAGs.
 4. Configuración de un pipeline CI/CD en GitHub Actions para pruebas automatizadas.
-5. Subida de los avances del proyecto al repositorio de GitHub.
+5. Creacion de Dashboard con Looker Studio
+6. Subida de los avances del proyecto al repositorio de GitHub.
 
 ## Consultas Avanzadas en BigQuery
 Se implementaron consultas avanzadas para analizar los datos procesados, incluyendo:
